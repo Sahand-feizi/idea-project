@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Step extends Model
 {
     use HasFactory;
+
     protected $attributes = [
         'completed' => false,
     ];

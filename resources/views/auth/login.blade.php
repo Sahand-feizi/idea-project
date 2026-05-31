@@ -15,6 +15,6 @@
             placeholder="........." 
             type="password"
         />
-        <button class="btn w-full h-10">Sign in</button>
+        <button class="btn w-full h-10" data-test="login-btn">Sign in</button>
     </form>
 </x-form>

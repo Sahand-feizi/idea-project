@@ -22,6 +22,6 @@
             placeholder="........." 
             type="password"
         />
-        <button class="btn w-full h-10">Register</button>
+        <button class="btn w-full h-10" data-test="register-btn">Register</button>
     </form>
 </x-form>

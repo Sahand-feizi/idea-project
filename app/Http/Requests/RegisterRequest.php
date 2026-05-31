@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
 class RegisterRequest extends FormRequest
 {
@@ -26,7 +29,15 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'min:5', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users'],
-            'password' => [Password::default()]
+            'password' => [Password::default()],
+        ];
+    }
+
+    #[Override]
+    public function messages()
+    {
+        return [
+            'password.string' => 'The password field is required.',
         ];
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Auth;
-use Hash;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function create() 
+    public function create()
     {
         return view('auth.register');
     }
@@ -20,11 +20,11 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => $request->input('password')
+            'password' => $request->input('password'),
         ]);
-        
+
         Auth::login($user);
-        
+
         return redirect('/');
     }
 }

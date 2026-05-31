@@ -26,7 +26,7 @@ test('An idea could have many steps', function () {
     $idea = Idea::factory()->create();
 
     Step::factory()->count(2)->create([
-        'idea_id' => $idea->id
+        'idea_id' => $idea->id,
     ]);
 
     expect($idea->steps)
