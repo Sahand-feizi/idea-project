@@ -26,7 +26,7 @@ class SessionController extends Controller
 
         return redirect()
             ->intended()
-            ->with('sucess', 'welcome to our site');
+            ->with('success', 'welcome to our site');
     }
 
     public function destroy()
