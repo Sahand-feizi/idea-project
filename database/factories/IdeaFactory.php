@@ -20,8 +20,8 @@ class IdeaFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'title' => fake()->title(),
-            'description' => fake()->sentence(),
+            'title' => fake()->sentence(),
+            'description' => fake()->text(),
             'links' => [fake()->url],
         ];
     }

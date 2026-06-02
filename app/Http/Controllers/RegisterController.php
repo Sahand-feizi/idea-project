@@ -25,6 +25,8 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect()
+            ->intended()
+            ->with('success', 'welcome to our site');
     }
 }
