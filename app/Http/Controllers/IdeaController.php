@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\IdeaStatus;
 use App\Models\Idea;
 use Auth;
 use Illuminate\Http\Request;
@@ -13,12 +14,26 @@ class IdeaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ideas = Auth::user()->ideas()->get();
+        $user = Auth::user();
+        $status = $request->input('status');
+
+        if (! in_array($status, IdeaStatus::cases())) {
+            $status = null;
+        }
+
+        $ideas = $user
+            ->ideas()
+            ->when(
+                $status,
+                fn ($query, $status) => $query->where('status', $status)
+            )
+            ->get();
 
         return view('idea.index', [
             'ideas' => $ideas,
+            'statusCount' => Idea::statusCounts($user),
         ]);
     }
 
