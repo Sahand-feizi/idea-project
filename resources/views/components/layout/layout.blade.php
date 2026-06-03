@@ -10,7 +10,7 @@
 
 <body class="bg-background text-foreground">
     <x-layout.nav />
-    <div class="max-w-6xl mx-auto py-8">
+    <div class="container xl:max-w-6xl mx-auto py-8">
         {{ $slot }}
     </div>
 

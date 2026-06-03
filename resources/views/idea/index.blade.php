@@ -23,7 +23,7 @@
         @forelse ($ideas as $idea)
             <x-card href="/ideas/{{ $idea->id }}">
                 <h3 class="text-xl font-bold text-foreground">{{ $idea->title }}</h3>
-                <x-status :status="$idea->status" />
+                <x-status class="m-2" :status="$idea->status" />
 
                 <div class="mt-6">
                     <p>{{ $idea->description }}</p>

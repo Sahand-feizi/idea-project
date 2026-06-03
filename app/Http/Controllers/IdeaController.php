@@ -19,7 +19,7 @@ class IdeaController extends Controller
         $user = Auth::user();
         $status = $request->input('status');
 
-        if (! in_array($status, IdeaStatus::cases())) {
+        if (! in_array($status, IdeaStatus::values())) {
             $status = null;
         }
 
@@ -56,9 +56,9 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): void
+    public function show(Idea $idea)
     {
-        //
+        return view('idea.show', ['idea' => $idea]);
     }
 
     /**
@@ -80,8 +80,10 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea): void
+    public function destroy(Idea $idea)
     {
-        //
+        $idea->delete();
+
+        return to_route('idea.index');
     }
 }
