@@ -27,4 +27,8 @@ enum IdeaStatus: string
             self::COMPLETED => 'bg-primary/10 text-primary border-primary/20'
         };
     }
+
+    public static function values(){
+        return array_map(fn($status) => $status->value, static::cases());
+    }
 }
