@@ -42,15 +42,15 @@
 
     {{-- model --}}
     <x-modal name="delete-idea" title="Are you sure that you want to delete this idea?">
-        <div class="w-full grid items-center grid-cols-2 gap-6">
-            <button @click="show = false" class="btn-outlined h-9 border border-muted-foreground rounded-lg">
+        <div class="flex items-center justify-end grid-cols-2 gap-2">
+            <button @click="$dispatch('close-modal')" class="btn-outlined h-9 border border-muted-foreground rounded-lg px-3">
                 Cancel
             </button>
-            <form class="w-full" method="POST" action="{{ route('idea.destroy', $idea) }}">
+            <form method="POST" action="{{ route('idea.destroy', $idea) }}">
                 @csrf
                 @method('DELETE')
                 <button @click="show = false"
-                    class="btn-outlined text-red-500 border h-9 border-red-500 rounded-lg hover:bg-red-500 hover:text-foreground transition-all duration-300 w-full">
+                    class="btn-outlined px-3 text-red-500 border h-9 border-red-500 rounded-lg hover:bg-red-500 hover:text-foreground transition-all duration-300 w-full">
                     Yest, I am.
                 </button>
             </form>
