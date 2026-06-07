@@ -52,9 +52,9 @@ class IdeaController extends Controller
      */
     public function store(IdeaRequest $request)
     {
-       Auth::user()->ideas()->create($request->validated());
+        Auth::user()->ideas()->create($request->validated());
 
-       return redirect('/ideas');
+        return redirect('/ideas');
     }
 
     /**

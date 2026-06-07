@@ -28,7 +28,8 @@ enum IdeaStatus: string
         };
     }
 
-    public static function values(){
-        return array_map(fn($status) => $status->value, static::cases());
+    public static function values(): array
+    {
+        return array_map(fn (IdeaStatus $status) => $status->value, self::cases());
     }
 }

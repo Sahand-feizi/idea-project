@@ -4,7 +4,7 @@
             <h1 class="text-4xl font-bold text-foreground">Ideas</h1>
             <p class="text-muted-foreground font-medium text-base">Campture your thoughts, Make a plan.</p>
         </div>
-        <button x-data class="btn btn-primary h-10" @click="$dispatch('open-modal', 'create-modal')">Create new
+        <button x-data class="btn btn-primary h-10"  @click="$dispatch('open-modal', 'create-modal')" data-test="create-idea-button">Create new
             Idea</button>
     </header>
 
@@ -52,7 +52,8 @@
                 <label for="" class="label font-bold">Status</label>
                 <div class="flex items-center justify-between gap-2 mt-2">
                     @foreach (\App\IdeaStatus::cases() as $status)
-                        <button type="button" class="btn flex-1 h-9" :class="status !== @js($status->value) ? 'btn-outlined' : ''"
+                        <button type="button" class="btn flex-1 h-9" 
+                        data-test="button-status-{{ $status->value }}" :class="status !== @js($status->value) ? 'btn-outlined' : ''"
                             @click="status = '{{ $status->value }}'">
                             {{ $status->label() }}
                         </button>
@@ -67,7 +68,7 @@
 
             <div class="flex items-center justify-end gap-2">
                 <button type="button" @click="$dispatch('close-modal')" class="btn btn btn-outlined">Cancel</button>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary" data-test="create-button">Create</button>
             </div>
         </form>
     </x-modal>

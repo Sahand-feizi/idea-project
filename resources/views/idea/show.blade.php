@@ -11,7 +11,7 @@
                     Edit Idea
                 </button>
                 <button x-data class="btn-outlined text-red-500"
-                    @click="$dispatch('open-modal', 'delete-idea')">Delete</button>
+                    @click="$dispatch('open-modal', 'delete-idea')" data-test="delete-idea-button">Delete</button>
             </div>
         </div>
         <div class="mt-8 text-muted-foreground space-y-6">
@@ -49,7 +49,7 @@
             <form method="POST" action="{{ route('idea.destroy', $idea) }}">
                 @csrf
                 @method('DELETE')
-                <button @click="show = false"
+                <button data-test="delete-button" @click="show = false"
                     class="btn-outlined px-3 text-red-500 border h-9 border-red-500 rounded-lg hover:bg-red-500 hover:text-foreground transition-all duration-300 w-full">
                     Yest, I am.
                 </button>
