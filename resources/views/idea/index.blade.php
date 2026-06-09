@@ -45,10 +45,10 @@
     </div>
 
     <x-modal name="create-modal" title="Create Idea">
-        <form x-data="{ status: 'pending', 'newLink': '', links: [] }" class="space-y-2" action="/ideas" method="POST">
+        <form x-data="{ status: 'pending', 'newLink': '', links: [], newStep: '', steps: [] }" class="space-y-2"
+            action="/ideas" method="POST">
             @csrf
-            <x-form.text-field name="title" label="Title" placeholder="My idea is ...." id="title" required
-                autofocus />
+            <x-form.text-field name="title" label="Title" placeholder="My idea is ...." id="title" required autofocus />
 
             <dev class="block mb-2!">
                 <label for="" class="label font-bold">Status</label>
@@ -70,13 +70,48 @@
 
             <div>
                 <fieldset>
+                    <legend class="label font-bold">Actionable Steps</legend>
+
+                    <template x-for="(step, index) in steps" :key="step">
+                        <div class="flex items-center mt-2 gap-2">
+                            <div class="relative flex-1">
+                                <input name="steps[]" x-model="step" type="text"
+                                    class="input w-full border border-muted-foreground text-muted-foreground" readonly>
+                                <span
+                                    class="text-muted-foreground text-xs px-2 rounded-xl absolute -top-2 bg-black z-10 left-2"
+                                    x-text="'#' + (index + 1)">
+                                </span>
+                            </div>
+                            <button @click="steps.splice(index, 1)">
+                                <x-icon.close class="form-muted-icon hover:text-red-500" />
+                            </button>
+                        </div>
+                    </template>
+
+                    <div class="flex items-center mt-2 gap-2">
+                        <input x-model="newStep" type="text" class="input flex-1" type="text" id="new-step"
+                            data-test="add-step-input" placeholder="What needs to be done?">
+                        <button @click="steps.push(newStep.trim()); newStep = ''" type="button"
+                            data-test="add-step-button" :disabled="newStep.trim().length === 0">
+                            <x-icon.close class="rotate-45 form-muted-icon" />
+                        </button>
+                    </div>
+                    <x-form.error name="steps" />
+                </fieldset>
+            </div>
+
+            <div>
+                <fieldset>
                     <legend class="label font-bold">Links</legend>
 
                     <template x-for="(link, index) in links" :key="link">
                         <div class="flex items-center mt-2 gap-2">
                             <div class="relative flex-1">
-                                <input name="links[]" x-model="link" type="text" class="input w-full border border-muted-foreground text-muted-foreground" readonly >
-                                <span class="text-muted-foreground text-xs px-2 rounded-xl absolute -top-2 bg-black z-10 left-2" x-text="'#' + (index + 1)">
+                                <input name="links[]" x-model="link" type="text"
+                                    class="input w-full border border-muted-foreground text-muted-foreground" readonly>
+                                <span
+                                    class="text-muted-foreground text-xs px-2 rounded-xl absolute -top-2 bg-black z-10 left-2"
+                                    x-text="'#' + (index + 1)">
                                 </span>
                             </div>
                             <button @click="links.splice(index, 1)">
@@ -87,10 +122,9 @@
 
                     <div class="flex items-center mt-2 gap-2">
                         <input x-model="newLink" type="text" class="input flex-1" type="url" id="new-link"
-                        data-test="add-link-input"
-                            placeholder="https://example.com">
-                        <button @click="links.push(newLink.trim()); newLink = ''" type="button" data-test="add-link-button"
-                            :disabled="newLink.trim().length === 0">
+                            data-test="add-link-input" placeholder="https://example.com">
+                        <button @click="links.push(newLink.trim()); newLink = ''" type="button"
+                            data-test="add-link-button" :disabled="newLink.trim().length === 0">
                             <x-icon.close class="rotate-45 form-muted-icon" />
                         </button>
                     </div>

@@ -1,6 +1,6 @@
 <x-layout>
     <div class="mt-8">
-        <div class="w-full flex items-center justify-between">
+        <div class="md:col-span-3 flex items-center justify-between">
             <a href="/ideas" class="flex text-lg items-center gap-2">
                 <x-icon.arrow />
                 Back to ideas
@@ -10,11 +10,11 @@
                     <x-icon.external />
                     Edit Idea
                 </button>
-                <button x-data class="btn-outlined text-red-500"
-                    @click="$dispatch('open-modal', 'delete-idea')" data-test="delete-idea-button">Delete</button>
+                <button x-data class="btn-outlined text-red-500" @click="$dispatch('open-modal', 'delete-idea')"
+                    data-test="delete-idea-button">Delete</button>
             </div>
         </div>
-        <div class="mt-8 text-muted-foreground space-y-6">
+        <div class="md:col-span-2 mt-8 text-muted-foreground space-y-6">
             <h1 class="text-4xl font-bold text-foreground">{{ $idea->title }}</h1>
             <div class="flex items-center gap-2">
                 <x-status :status="$idea->status" />
@@ -26,8 +26,31 @@
                 <p>{{ $idea->description }}</p>
             </div>
         </div>
+        @if ($idea->steps->count())
+            <div class="md:col-span-2 mt-8">
+                <h3 class="text-2xl font-bold text-foreground">Actionable Steps</h3>
+                <div class="px-4 mt-6 space-y-2">
+                    @foreach ($idea->steps as $step)
+                        <x-card is="div">
+                            <form method="POST" action="{{ route('step.update', $step) }}">
+                                @csrf
+                                @method('PATCH')
+                                <div class="flex items-center gap-x-2">
+                                    <button
+                                        class="size-5 w-6 h-6 rounded-full flex items-center justify-center border border-primary text-primary-foreground {{ $step->completed ? 'bg-primary' : '' }}"
+                                        role="checkbox" type="submit">
+                                        &check;
+                                    </button>
+                                    <p class="{{ $step->completed ? 'line-through text-muted-foreground' : '' }}">{{ $step->description }}</p>
+                                </div>
+                            </form>
+                        </x-card>
+                    @endforeach
+                </div>
+            </div>
+        @endif
         @if ($idea->links->count())
-            <div class="mt-8">
+            <div class="md:col-span-2 mt-8">
                 <h3 class="text-2xl font-bold text-foreground">Links</h3>
                 <div class="px-4 mt-6 space-y-2">
                     @foreach ($idea->links as $link)
@@ -43,7 +66,8 @@
     {{-- model --}}
     <x-modal name="delete-idea" title="Are you sure that you want to delete this idea?">
         <div class="flex items-center justify-end grid-cols-2 gap-2">
-            <button @click="$dispatch('close-modal')" class="btn-outlined h-9 border border-muted-foreground rounded-lg px-3">
+            <button @click="$dispatch('close-modal')"
+                class="btn-outlined h-9 border border-muted-foreground rounded-lg px-3">
                 Cancel
             </button>
             <form method="POST" action="{{ route('idea.destroy', $idea) }}">
