@@ -52,11 +52,21 @@ class IdeaController extends Controller
      */
     public function store(IdeaRequest $request)
     {
-        $idea = Auth::user()->ideas()->create($request->safe()->except('steps'));
+        $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
 
-        $idea->steps()->createMany(
-            collect($request->steps)->map(fn ($step) => ['description' => $step])
-        );
+        if ($request->steps) {
+            $idea->steps()->createMany(
+                collect($request->steps)->map(fn ($step) => ['description' => $step])
+            );
+        }
+
+        if ($request->image) {
+            $imagePath = $request->image->store('ideas', 'public');
+
+            $idea->update([
+                'image_path' => $imagePath,
+            ]);
+        }
 
         return redirect('/ideas');
     }

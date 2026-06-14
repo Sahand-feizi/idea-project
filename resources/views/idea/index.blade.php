@@ -26,6 +26,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-muted-foreground px-4 mt-8">
         @forelse ($ideas as $idea)
             <x-card href="/ideas/{{ $idea->id }}">
+                @if ($idea->image_path)
+                    <div class="overflow-hidden mb-2 -mx-4 -mt-4">
+                        <img src="{{ asset('storage/' . $idea->image_path) }}" alt="" class="w-full max-h-40 object-cover">
+                    </div>
+                @endif
                 <h3 class="text-xl font-bold text-foreground">{{ $idea->title }}</h3>
                 <x-status class="m-2" :status="$idea->status" />
 
@@ -46,7 +51,7 @@
 
     <x-modal name="create-modal" title="Create Idea">
         <form x-data="{ status: 'pending', 'newLink': '', links: [], newStep: '', steps: [] }" class="space-y-2"
-            action="/ideas" method="POST">
+            action="/ideas" method="POST" enctype="multipart/form-data">
             @csrf
             <x-form.text-field name="title" label="Title" placeholder="My idea is ...." id="title" required autofocus />
 
@@ -67,6 +72,12 @@
 
             <x-form.text-field name="description" label="Description" placeholder="I have ..." id="description"
                 type="textarea" />
+
+            <div class="space-y-2">
+                <label for="image" class="label font-bold">Feature Image</label>
+                <input type="file" name="image" id="image">
+                <x-form.error name="image" />
+            </div>
 
             <div>
                 <fieldset>
@@ -89,9 +100,8 @@
                     </template>
 
                     <div class="flex items-center mt-2 gap-2">
-                        <input x-model="newStep" type="text" class="input flex-1" type="text" id="new-step"
-                            data-test="add-step-input" placeholder="What needs to be done?">
-                        <button @click="steps.push(newStep.trim()); newStep = ''" type="button"
+                        <input data-test="step-input" x-model="newStep" type="text" class="input flex-1" type="text" id="new-step" placeholder="What needs to be done?">
+                        <button data-test="add-step-button" @click="steps.push(newStep.trim()); newStep = ''" type="button"
                             data-test="add-step-button" :disabled="newStep.trim().length === 0">
                             <x-icon.close class="rotate-45 form-muted-icon" />
                         </button>
