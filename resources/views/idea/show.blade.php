@@ -28,4 +28,6 @@
 
     {{-- model --}}
     <x-idea.delete-modal :idea="$idea" />
+    <x-idea.modal method="PATCH" action="/ideas/{idea}" :idea="$idea" modalTitle="Update Idea"
+        modalName="update-modal" submitButtonTitle="Update" submitButtonTest="update-button" />
 </x-layout>

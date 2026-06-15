@@ -14,7 +14,7 @@ it('Creates a new idea', function () {
         ->fill('title', $title)
         ->fill('description', $description)
         ->click('@button-status-in_progress')
-        ->fill('@step-input', 'first step')
+        ->fill('@add-step-input', 'first step')
         ->click('@add-step-button')
         ->fill('@add-link-input', 'https://example.com')
         ->click('@add-link-button')

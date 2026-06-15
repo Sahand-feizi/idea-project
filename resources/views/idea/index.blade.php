@@ -28,7 +28,8 @@
             <x-card href="/ideas/{{ $idea->id }}">
                 @if ($idea->image_path)
                     <div class="overflow-hidden mb-2 -mx-4 -mt-4">
-                        <img src="{{ asset('storage/' . $idea->image_path) }}" alt="" class="w-full max-h-40 object-cover">
+                        <img src="{{ asset('storage/' . $idea->image_path) }}" alt=""
+                            class="w-full max-h-40 object-cover">
                     </div>
                 @endif
                 <h3 class="text-xl font-bold text-foreground">{{ $idea->title }}</h3>
@@ -49,7 +50,7 @@
         @endforelse
     </div>
 
-    <x-modal name="create-modal" title="Create Idea">
+    {{-- <x-modal name="create-modal" title="Create Idea">
         <form x-data="{ status: 'pending', 'newLink': '', links: [], newStep: '', steps: [] }" class="space-y-2"
             action="/ideas" method="POST" enctype="multipart/form-data">
             @csrf
@@ -146,5 +147,7 @@
                 <button type="submit" class="btn btn-primary" data-test="create-button">Create</button>
             </div>
         </form>
-    </x-modal>
+    </x-modal> --}}
+
+    <x-idea.modal action="/ideas" modalTitle="Create Idea" modalName="create-modal" submitButtonTest="create-button" submitButtonTitle="Create" />
 </x-layout>

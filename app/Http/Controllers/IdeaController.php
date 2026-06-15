@@ -77,7 +77,7 @@ class IdeaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Idea $idea): void
+    public function update(IdeaRequest $request, Idea $idea): void
     {
         //
     }
