@@ -30,3 +30,14 @@ it('Creates a new idea', function () {
 
     expect(Step::count())->toBe(1);
 });
+
+it('requires the title input', function () {
+    $this->actingAs($user = User::factory()->create());
+
+    visit('/ideas')
+        ->click('@create-idea-button')
+        ->click('@create-button')
+        ->assertPathIs('/ideas');
+
+    expect($user->ideas->count())->toBe(0);
+});
