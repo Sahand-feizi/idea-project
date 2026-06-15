@@ -10,15 +10,31 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/ideas');
 
-Route::get('/ideas', [IdeaController::class, 'index'])->name('idea.index')->middleware('auth');
-Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->middleware('auth');
-Route::post('/ideas', [IdeaController::class, 'store'])->middleware('auth');
-Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('idea.destroy')->middleware('auth');
+Route::get('/ideas', [IdeaController::class, 'index'])
+    ->name('idea.index')
+    ->middleware('auth');
+Route::get('/ideas/{idea}', [IdeaController::class, 'show'])
+    ->middleware('auth')
+    ->can('modify', 'idea');
+Route::post('/ideas', [IdeaController::class, 'store'])
+    ->middleware('auth');
+Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])
+    ->name('idea.destroy')
+    ->middleware('auth')
+    ->can('modify', 'idea');
 
-Route::patch('/steps/{step}/update', [StepController::class, 'update'])->name('step.update')->middleware('auth');
+Route::patch('/steps/{step}/update', [StepController::class, 'update'])
+    ->name('step.update')
+    ->middleware('auth');
 
-Route::get('/login', [SessionController::class, 'create'])->name('login')->middleware('guest');
-Route::post('/login', [SessionController::class, 'store'])->middleware('guest');
-Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
-Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
+Route::get('/login', [SessionController::class, 'create'])
+    ->name('login')
+    ->middleware('guest');
+Route::post('/login', [SessionController::class, 'store'])
+    ->middleware('guest');
+Route::get('/register', [RegisterController::class, 'create'])
+    ->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store'])
+    ->middleware('guest');
+Route::delete('/logout', [SessionController::class, 'destroy'])
+    ->middleware('auth');

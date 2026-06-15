@@ -15,3 +15,11 @@ it('deletes an idea', function () {
 
     expect($user->ideas()->count())->toBe(0);
 });
+
+it('requires authorization', function () {
+    $this->actingAs(User::factory()->create());
+
+    $idea = Idea::factory()->create();
+
+    $this->delete("/ideas/{$idea->id}")->assertForbidden();
+});
