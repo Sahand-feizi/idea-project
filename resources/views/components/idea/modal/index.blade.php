@@ -12,7 +12,7 @@
     $image = null;
 
     if ($idea and $idea->steps) {
-        $steps = $idea->steps->map(fn($step) => $step->description);
+        $steps = $idea->steps->map->only(['description', 'completed']);
     }
 
     if ($idea and $idea->image_path) {
