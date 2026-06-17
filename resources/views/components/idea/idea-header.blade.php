@@ -4,7 +4,7 @@
         Back to ideas
     </a>
     <div class="flex items-center gap-4">
-        <button x-data @click="$dispatch('open-modal', 'update-modal')" class="btn-outlined flex items-center gap-2">
+        <button x-data @click="$dispatch('open-modal', 'update-modal')" class="btn-outlined flex items-center gap-2" data-test="update-idea-button">
             <x-icon.external />
             Edit Idea
         </button>
