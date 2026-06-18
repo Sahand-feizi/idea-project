@@ -43,7 +43,6 @@ Route::post('/register', [RegisterController::class, 'store'])
 Route::delete('/logout', [SessionController::class, 'destroy'])
     ->middleware('auth');
 
-
 // dashboard
 Route::get('/profile/settings', [ProfileController::class, 'edit'])->middleware('auth');
 Route::patch('/profile', [ProfileController::class, 'update'])->middleware('auth');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Auth;
@@ -29,7 +31,7 @@ class DeleteAccountRequest extends FormRequest
                 if ($value !== Auth::user()->email) {
                     $fail('The provided email does not match your current email.');
                 }
-            },'max:255'],
+            }, 'max:255'],
             'password' => ['required', 'current_password', Password::default()],
         ];
     }
