@@ -1,8 +1,12 @@
-@props(['id', 'name', 'type' => 'text', 'label' => false, 'value' => ''])
+@props(['id', 'name', 'type' => 'text', 'label' => false, 'value' => '', 'required' => false])
 
 <div>
     @if ($label)
-        <label class="label font-bold" for="{{ $id }}">{{ $label }}</label>
+        <label class="label font-bold" for="{{ $id }}">{{ $label }}
+            @if (!$required)
+                <span class="text-muted-foreground text-sm font-normal">(optinal)</span>
+            @endif
+        </label>
     @endif
     
     @if($type === 'textarea')

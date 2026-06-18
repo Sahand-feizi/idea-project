@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\IdeaController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StepController;
@@ -41,3 +42,9 @@ Route::post('/register', [RegisterController::class, 'store'])
     ->middleware('guest');
 Route::delete('/logout', [SessionController::class, 'destroy'])
     ->middleware('auth');
+
+
+// dashboard
+Route::get('/profile/settings', [ProfileController::class, 'edit'])->middleware('auth');
+Route::patch('/profile', [ProfileController::class, 'update'])->middleware('auth');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware('auth');

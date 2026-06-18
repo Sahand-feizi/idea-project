@@ -40,3 +40,16 @@ button {
     background: color-mix(in srgb, black 10%, var(--color-primary));
     text-decoration: none;
 }
+
+.btn.btn-danger {
+    color: red;
+    border: 1px solid red;
+    transition: .3s all;
+    background-color: transparent;
+}
+
+.btn.btn-danger:hover {
+    color: var(--color-foreground);
+    border: 1px solid red;
+    background-color: red;
+}
