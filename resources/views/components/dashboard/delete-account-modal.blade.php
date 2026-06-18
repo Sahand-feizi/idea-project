@@ -2,9 +2,9 @@
     <form action="/profile" method="POST">
         @csrf
         @method('DELETE')
-        <x-form.text-field label="Email" name="email" id="email" placeholder="you@example.com" required
+        <x-form.text-field data-test="delete-email" label="Email" name="email" id="email" placeholder="you@example.com" required
             type="email" />
-        <x-form.text-field label="Password" name="password" id="password" placeholder="........." type="password"
+        <x-form.text-field data-test="delete-password" label="Password" name="password" id="password" placeholder="........." type="password"
             required />
         <div class="flex items-center justify-end gap-2">
             <button type="button" @click="$dispatch('close-modal')" class="btn btn btn-outlined">Cancel</button>

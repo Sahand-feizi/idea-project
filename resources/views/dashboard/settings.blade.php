@@ -36,7 +36,7 @@
             </p>
         </div>
         <div>
-            <button class="btn btn-danger h-10" x-data @click="$dispatch('open-modal', 'delete-account')">
+            <button data-test="account-button" class="btn btn-danger h-10" x-data @click="$dispatch('open-modal', 'delete-account')">
                 Delete Account
             </button>
         </div>
