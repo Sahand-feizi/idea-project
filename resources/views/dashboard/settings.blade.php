@@ -1,6 +1,12 @@
 @props(['user'])
 
 <x-dashboard.layout>
+    <div class="mb-4">
+        <a href="/ideas" class="btn btn-outlined">
+            <x-heroicon-o-arrow-left class="w-5 h-5 text-white"/>
+            <span>Back to ideas</span>
+        </a>
+    </div>
     <div>
         <h2 class="text-xl font-bold text-foreground">Update Profile</h2>
         <form action="/profile" method="POST" class="w-full mt-2 space-y-6">
