@@ -11,39 +11,34 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/ideas');
 
-Route::get('/ideas', [IdeaController::class, 'index'])
-    ->name('idea.index')
-    ->middleware('auth');
-Route::get('/ideas/{idea}', [IdeaController::class, 'show'])
-    ->middleware('auth')
-    ->can('modify', 'idea');
-Route::post('/ideas', [IdeaController::class, 'store'])
-    ->middleware('auth');
-Route::patch('/ideas/{idea}', [IdeaController::class, 'update'])
-    ->middleware('auth')
-    ->can('modify', 'idea');
-Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])
-    ->name('idea.destroy')
-    ->middleware('auth')
-    ->can('modify', 'idea');
+Route::middleware('auth')->group(function () {
+    Route::get('/ideas', [IdeaController::class, 'index'])
+        ->name('idea.index');
+    Route::get('/ideas/{idea}', [IdeaController::class, 'show'])
+        ->can('modify', 'idea');
+    Route::post('/ideas', [IdeaController::class, 'store']);
+    Route::patch('/ideas/{idea}', [IdeaController::class, 'update'])
+        ->can('modify', 'idea');
+    Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])
+        ->name('idea.destroy')
+        ->can('modify', 'idea');
 
-Route::patch('/steps/{step}/update', [StepController::class, 'update'])
-    ->name('step.update')
-    ->middleware('auth');
+    Route::patch('/steps/{step}/update', [StepController::class, 'update'])
+        ->name('step.update');
 
-Route::get('/login', [SessionController::class, 'create'])
-    ->name('login')
-    ->middleware('guest');
-Route::post('/login', [SessionController::class, 'store'])
-    ->middleware('guest');
-Route::get('/register', [RegisterController::class, 'create'])
-    ->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store'])
-    ->middleware('guest');
-Route::delete('/logout', [SessionController::class, 'destroy'])
-    ->middleware('auth');
+    // dashboard
+    Route::get('/profile/settings', [ProfileController::class, 'edit']);
+    Route::patch('/profile', [ProfileController::class, 'update']);
+    Route::delete('/profile', [ProfileController::class, 'destroy']);
 
-// dashboard
-Route::get('/profile/settings', [ProfileController::class, 'edit'])->middleware('auth');
-Route::patch('/profile', [ProfileController::class, 'update'])->middleware('auth');
-Route::delete('/profile', [ProfileController::class, 'destroy'])->middleware('auth');
+    // logout
+    Route::delete('/logout', [SessionController::class, 'destroy']);
+});
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create'])
+        ->name('login');
+    Route::post('/login', [SessionController::class, 'store']);
+    Route::get('/register', [RegisterController::class, 'create']);
+    Route::post('/register', [RegisterController::class, 'store']);
+});
