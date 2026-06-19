@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="px-4 text-foreground text-lg cursor-pointer">
-                <p>{{ $idea->description }}</p>
+                <p class="porse">{!! $idea->formattedDescription !!}</p>
             </div>
         </div>
         @if ($idea->steps->count())

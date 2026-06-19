@@ -7,10 +7,12 @@ namespace App\Models;
 use App\IdeaStatus;
 use Database\Factories\IdeaFactory;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\HtmlString;
 
 class Idea extends Model
 {
@@ -47,5 +49,15 @@ class Idea extends Model
         return collect(IdeaStatus::cases())
             ->mapWithKeys(fn ($status) => [$status->value => $count->get($status->value, 0)])
             ->put('all', $user->ideas()->count());
+    }
+
+    public function formattedDescription(): Attribute
+    {
+        return Attribute::get(
+            fn ($value, $attributes) => new HtmlString(str($attributes['description'])->markdown([
+                'html_input' => 'escape',
+                'allow_unsafe_links' => false,
+                'max_nesting_level' => 5,
+            ])));
     }
 }
