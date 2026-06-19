@@ -8,7 +8,7 @@ it('registes user', function () {
         ->fill('email', 'sahand@gmail.com')
         ->fill('password', 'password')
         ->press('@register-btn')
-        ->assertPathIs('/');
+        ->assertRoute('idea.index');
 
     expect(User::count())->toBe(1);
 

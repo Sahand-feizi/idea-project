@@ -16,7 +16,7 @@ it('logs in user', function () {
         ->fill('email', $email)
         ->fill('password', $password)
         ->press('@login-btn')
-        ->assertPathIs('/');
+        ->assertRoute('idea.index');
 
     $this->assertAuthenticated();
 });
